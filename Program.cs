@@ -7,20 +7,42 @@ namespace Zoo
     {
         static void Main(string[] args)
         {
-            Zoo zoo = new Zoo();
+            ZooFactory zooFactory = new ZooFactory();
+            Zoo zoo = zooFactory.Create();
 
             zoo.ConductExcursion();
         }
     }
 
-    class Zoo
+    class ZooFactory
     {
-        private List<Enclosure> _enclosures = new List<Enclosure>();
         private EnclosureCreator _enclosureCreator = new EnclosureCreator();
 
-        public Zoo()
+        private List<Enclosure> CreateEnclosures()
         {
-            CreateEnclosures();
+            List<Enclosure> enclosures = new List<Enclosure>();
+
+            enclosures.Add(_enclosureCreator.CreateCatsEnclosure());
+            enclosures.Add(_enclosureCreator.CreateDogsEnclosure());
+            enclosures.Add(_enclosureCreator.CreateBirdsEnclosure());
+            enclosures.Add(_enclosureCreator.CreateFarmAnimalsEnclosure());
+
+            return enclosures;
+        }
+
+        public Zoo Create()
+        {
+            return new Zoo(CreateEnclosures());
+        }
+    }
+
+    class Zoo
+    {
+        private List<Enclosure> _enclosures;
+        
+        public Zoo(List<Enclosure> enclosures)
+        {
+            _enclosures = enclosures;
         }
 
         public void ConductExcursion()
@@ -66,14 +88,6 @@ namespace Zoo
 
             Console.WriteLine("До свидания, надеюсь вам понравилось в нашем зоопарке.");
         }
-
-        private void CreateEnclosures()
-        {
-            _enclosures.Add(_enclosureCreator.FillCatsEnclosure());
-            _enclosures.Add(_enclosureCreator.FillDogsEnclosure());
-            _enclosures.Add(_enclosureCreator.FilBirdsEnclosure());
-            _enclosures.Add(_enclosureCreator.FillFarmAnimalsEnclosure());
-        }
     }
 
     class Enclosure
@@ -108,7 +122,7 @@ namespace Zoo
     {
         private AnimalCreator _animalCreator = new AnimalCreator();
 
-        public Enclosure FillCatsEnclosure()
+        public Enclosure CreateCatsEnclosure()
         {
             Enclosure catsEnclosure = new Enclosure("Это загон для зверей семейства кошачьих.");
 
@@ -119,7 +133,7 @@ namespace Zoo
             return catsEnclosure;
         }
 
-        public Enclosure FillDogsEnclosure()
+        public Enclosure CreateDogsEnclosure()
         {
             Enclosure dogsEnclosure = new Enclosure("Это загон для зверей семейства собачьих.");
 
@@ -130,7 +144,7 @@ namespace Zoo
             return dogsEnclosure;
         }
 
-        public Enclosure FilBirdsEnclosure()
+        public Enclosure CreateBirdsEnclosure()
         {
             Enclosure birdsEnclosure = new Enclosure("Это загон для зверей семейства птичьих.");
 
@@ -141,7 +155,7 @@ namespace Zoo
             return birdsEnclosure;
         }
 
-        public Enclosure FillFarmAnimalsEnclosure()
+        public Enclosure CreateFarmAnimalsEnclosure()
         {
             Enclosure farmAnimalsEnclosure = new Enclosure("Это загон для сельскохозяйственных зверей.");
 
