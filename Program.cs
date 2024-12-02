@@ -7,9 +7,9 @@ namespace Zoo
     {
         static void Main(string[] args)
         {
-            AnimalCreator animalCreator = new AnimalCreator();
-            EnclosureCreator enclosureCreator = new EnclosureCreator(animalCreator);
-            ZooFactory zooFactory = new ZooFactory(enclosureCreator);
+            AnimalFactory animalFactory = new AnimalFactory();
+            EnclosureFactory enclosureFactory = new EnclosureFactory(animalFactory);
+            ZooFactory zooFactory = new ZooFactory(enclosureFactory);
             Zoo zoo = zooFactory.Create();
 
             zoo.ConductExcursion();
@@ -18,21 +18,21 @@ namespace Zoo
 
     class ZooFactory
     {
-        private EnclosureCreator _enclosureCreator;
+        private EnclosureFactory _enclosureFactory;
 
-        public ZooFactory(EnclosureCreator enclosureCreator)
+        public ZooFactory(EnclosureFactory enclosureFactory)
         {
-            _enclosureCreator = enclosureCreator;
+            _enclosureFactory = enclosureFactory;
         }
 
         private List<Enclosure> CreateEnclosures()
         {
             List<Enclosure> enclosures = new List<Enclosure>();
 
-            enclosures.Add(_enclosureCreator.CreateCatsEnclosure());
-            enclosures.Add(_enclosureCreator.CreateDogsEnclosure());
-            enclosures.Add(_enclosureCreator.CreateBirdsEnclosure());
-            enclosures.Add(_enclosureCreator.CreateFarmAnimalsEnclosure());
+            enclosures.Add(_enclosureFactory.CreateCatsEnclosure());
+            enclosures.Add(_enclosureFactory.CreateDogsEnclosure());
+            enclosures.Add(_enclosureFactory.CreateBirdsEnclosure());
+            enclosures.Add(_enclosureFactory.CreateFarmAnimalsEnclosure());
 
             return enclosures;
         }
@@ -125,22 +125,22 @@ namespace Zoo
         }
     }
 
-    class EnclosureCreator
+    class EnclosureFactory
     {
-        private AnimalCreator _animalCreator;
+        private AnimalFactory _animalFactory;
 
-        public EnclosureCreator(AnimalCreator animalCreator)
+        public EnclosureFactory(AnimalFactory animalFactory)
         {
-            _animalCreator = animalCreator;
+            _animalFactory = animalFactory;
         }
 
         public Enclosure CreateCatsEnclosure()
         {
             Enclosure catsEnclosure = new Enclosure("Это загон для зверей семейства кошачьих.");
 
-            catsEnclosure.AddAnimal(_animalCreator.CreateLinx());
-            catsEnclosure.AddAnimal(_animalCreator.CreateLion());
-            catsEnclosure.AddAnimal(_animalCreator.CreateTiger());
+            catsEnclosure.AddAnimal(_animalFactory.CreateLinx());
+            catsEnclosure.AddAnimal(_animalFactory.CreateLion());
+            catsEnclosure.AddAnimal(_animalFactory.CreateTiger());
 
             return catsEnclosure;
         }
@@ -149,9 +149,9 @@ namespace Zoo
         {
             Enclosure dogsEnclosure = new Enclosure("Это загон для зверей семейства собачьих.");
 
-            dogsEnclosure.AddAnimal(_animalCreator.CreateHyena());
-            dogsEnclosure.AddAnimal(_animalCreator.CreateWolf());
-            dogsEnclosure.AddAnimal(_animalCreator.CreateDingoDog());
+            dogsEnclosure.AddAnimal(_animalFactory.CreateHyena());
+            dogsEnclosure.AddAnimal(_animalFactory.CreateWolf());
+            dogsEnclosure.AddAnimal(_animalFactory.CreateDingoDog());
 
             return dogsEnclosure;
         }
@@ -160,9 +160,9 @@ namespace Zoo
         {
             Enclosure birdsEnclosure = new Enclosure("Это загон для зверей семейства птичьих.");
 
-            birdsEnclosure.AddAnimal(_animalCreator.CreateParrot());
-            birdsEnclosure.AddAnimal(_animalCreator.CreateEagle());
-            birdsEnclosure.AddAnimal(_animalCreator.CreateOwl());
+            birdsEnclosure.AddAnimal(_animalFactory.CreateParrot());
+            birdsEnclosure.AddAnimal(_animalFactory.CreateEagle());
+            birdsEnclosure.AddAnimal(_animalFactory.CreateOwl());
 
             return birdsEnclosure;
         }
@@ -171,15 +171,15 @@ namespace Zoo
         {
             Enclosure farmAnimalsEnclosure = new Enclosure("Это загон для сельскохозяйственных зверей.");
 
-            farmAnimalsEnclosure.AddAnimal(_animalCreator.CreateHorse());
-            farmAnimalsEnclosure.AddAnimal(_animalCreator.CreateCow());
-            farmAnimalsEnclosure.AddAnimal(_animalCreator.CreateSheep());
+            farmAnimalsEnclosure.AddAnimal(_animalFactory.CreateHorse());
+            farmAnimalsEnclosure.AddAnimal(_animalFactory.CreateCow());
+            farmAnimalsEnclosure.AddAnimal(_animalFactory.CreateSheep());
 
             return farmAnimalsEnclosure;
         }
     }
 
-    class AnimalCreator
+    class AnimalFactory
     {
         public Animal CreateLinx()
         {
