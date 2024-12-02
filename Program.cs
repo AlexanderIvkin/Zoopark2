@@ -7,7 +7,9 @@ namespace Zoo
     {
         static void Main(string[] args)
         {
-            ZooFactory zooFactory = new ZooFactory();
+            AnimalCreator animalCreator = new AnimalCreator();
+            EnclosureCreator enclosureCreator = new EnclosureCreator(animalCreator);
+            ZooFactory zooFactory = new ZooFactory(enclosureCreator);
             Zoo zoo = zooFactory.Create();
 
             zoo.ConductExcursion();
@@ -16,7 +18,12 @@ namespace Zoo
 
     class ZooFactory
     {
-        private EnclosureCreator _enclosureCreator = new EnclosureCreator();
+        private EnclosureCreator _enclosureCreator;
+
+        public ZooFactory(EnclosureCreator enclosureCreator)
+        {
+            _enclosureCreator = enclosureCreator;
+        }
 
         private List<Enclosure> CreateEnclosures()
         {
@@ -120,7 +127,12 @@ namespace Zoo
 
     class EnclosureCreator
     {
-        private AnimalCreator _animalCreator = new AnimalCreator();
+        private AnimalCreator _animalCreator;
+
+        public EnclosureCreator(AnimalCreator animalCreator)
+        {
+            _animalCreator = animalCreator;
+        }
 
         public Enclosure CreateCatsEnclosure()
         {
