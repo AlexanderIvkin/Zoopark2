@@ -69,10 +69,10 @@ namespace Zoo
 
         private void CreateEnclosures()
         {
-            _enclosures.Add(_enclosureCreator.CreateCatsEnclosure());
-            _enclosures.Add(_enclosureCreator.CreateDogsEnclosure());
-            _enclosures.Add(_enclosureCreator.CreateBirdsEnclosure());
-            _enclosures.Add(_enclosureCreator.CreateFarmAnimalsEnclosure());
+            _enclosures.Add(_enclosureCreator.FillCatsEnclosure());
+            _enclosures.Add(_enclosureCreator.FillDogsEnclosure());
+            _enclosures.Add(_enclosureCreator.FilBirdsEnclosure());
+            _enclosures.Add(_enclosureCreator.FillFarmAnimalsEnclosure());
         }
     }
 
@@ -108,7 +108,7 @@ namespace Zoo
     {
         private AnimalCreator _animalCreator = new AnimalCreator();
 
-        public Enclosure CreateCatsEnclosure()
+        public Enclosure FillCatsEnclosure()
         {
             Enclosure catsEnclosure = new Enclosure("Это загон для зверей семейства кошачьих.");
 
@@ -118,7 +118,8 @@ namespace Zoo
 
             return catsEnclosure;
         }
-        public Enclosure CreateDogsEnclosure()
+
+        public Enclosure FillDogsEnclosure()
         {
             Enclosure dogsEnclosure = new Enclosure("Это загон для зверей семейства собачьих.");
 
@@ -128,7 +129,8 @@ namespace Zoo
 
             return dogsEnclosure;
         }
-        public Enclosure CreateBirdsEnclosure()
+
+        public Enclosure FilBirdsEnclosure()
         {
             Enclosure birdsEnclosure = new Enclosure("Это загон для зверей семейства птичьих.");
 
@@ -139,7 +141,7 @@ namespace Zoo
             return birdsEnclosure;
         }
 
-        public Enclosure CreateFarmAnimalsEnclosure()
+        public Enclosure FillFarmAnimalsEnclosure()
         {
             Enclosure farmAnimalsEnclosure = new Enclosure("Это загон для сельскохозяйственных зверей.");
 
