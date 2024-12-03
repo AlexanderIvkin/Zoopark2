@@ -25,6 +25,11 @@ namespace Zoo
             _enclosureFactory = enclosureFactory;
         }
 
+        public Zoo Create()
+        {
+            return new Zoo(CreateEnclosures());
+        }
+
         private List<Enclosure> CreateEnclosures()
         {
             List<Enclosure> enclosures = new List<Enclosure>();
@@ -36,17 +41,12 @@ namespace Zoo
 
             return enclosures;
         }
-
-        public Zoo Create()
-        {
-            return new Zoo(CreateEnclosures());
-        }
     }
 
     class Zoo
     {
         private List<Enclosure> _enclosures;
-        
+
         public Zoo(List<Enclosure> enclosures)
         {
             _enclosures = enclosures;
@@ -63,7 +63,7 @@ namespace Zoo
 
             while (isWorking)
             {
-                int userInput;
+                int limitedIntegerUserInput;
 
                 foreach (Enclosure enclosure in _enclosures)
                 {
@@ -76,10 +76,10 @@ namespace Zoo
                 {
                     Console.Write("Ваш выбор: ");
                 }
-                while (int.TryParse(Console.ReadLine(), out userInput) == false || userInput <= 0 || userInput > _enclosures.Count);
+                while (int.TryParse(Console.ReadLine(), out limitedIntegerUserInput) == false || limitedIntegerUserInput <= 0 || limitedIntegerUserInput > _enclosures.Count);
 
                 Console.Clear();
-                _enclosures[userInput - 1].Show();
+                _enclosures[limitedIntegerUserInput - 1].Show();
 
                 Console.WriteLine(indent + "Нажмите любую клавишу для продолжения. Для выхода нажмите " + exitButton);
 
@@ -108,9 +108,9 @@ namespace Zoo
 
         public string Description { get; private set; }
 
-        public void AddAnimal(Animal animal)
+        public void AddAnimals(List<Animal> animals)
         {
-            _animals.Add(animal);
+            _animals.AddRange(animals);
         }
 
         public void Show()
@@ -137,10 +137,13 @@ namespace Zoo
         public Enclosure CreateCatsEnclosure()
         {
             Enclosure catsEnclosure = new Enclosure("Это загон для зверей семейства кошачьих.");
+            List<Animal> addedAnimals = new List<Animal>()
+            { _animalFactory.CreateLinx(),
+              _animalFactory.CreateLion(),
+              _animalFactory.CreateTiger()
+            };
 
-            catsEnclosure.AddAnimal(_animalFactory.CreateLinx());
-            catsEnclosure.AddAnimal(_animalFactory.CreateLion());
-            catsEnclosure.AddAnimal(_animalFactory.CreateTiger());
+            catsEnclosure.AddAnimals(addedAnimals);
 
             return catsEnclosure;
         }
@@ -148,10 +151,13 @@ namespace Zoo
         public Enclosure CreateDogsEnclosure()
         {
             Enclosure dogsEnclosure = new Enclosure("Это загон для зверей семейства собачьих.");
-
-            dogsEnclosure.AddAnimal(_animalFactory.CreateHyena());
-            dogsEnclosure.AddAnimal(_animalFactory.CreateWolf());
-            dogsEnclosure.AddAnimal(_animalFactory.CreateDingoDog());
+            List<Animal> addedAnimals = new List<Animal>()
+            { _animalFactory.CreateHyena(),
+              _animalFactory.CreateWolf(),
+              _animalFactory.CreateDingoDog()
+            };
+            
+            dogsEnclosure.AddAnimals(addedAnimals);
 
             return dogsEnclosure;
         }
@@ -159,10 +165,13 @@ namespace Zoo
         public Enclosure CreateBirdsEnclosure()
         {
             Enclosure birdsEnclosure = new Enclosure("Это загон для зверей семейства птичьих.");
-
-            birdsEnclosure.AddAnimal(_animalFactory.CreateParrot());
-            birdsEnclosure.AddAnimal(_animalFactory.CreateEagle());
-            birdsEnclosure.AddAnimal(_animalFactory.CreateOwl());
+            List<Animal> addedAnimals = new List<Animal>()
+            { _animalFactory.CreateParrot(),
+              _animalFactory.CreateEagle(),
+              _animalFactory.CreateOwl()
+            };
+            
+            birdsEnclosure.AddAnimals(addedAnimals);
 
             return birdsEnclosure;
         }
@@ -170,10 +179,13 @@ namespace Zoo
         public Enclosure CreateFarmAnimalsEnclosure()
         {
             Enclosure farmAnimalsEnclosure = new Enclosure("Это загон для сельскохозяйственных зверей.");
-
-            farmAnimalsEnclosure.AddAnimal(_animalFactory.CreateHorse());
-            farmAnimalsEnclosure.AddAnimal(_animalFactory.CreateCow());
-            farmAnimalsEnclosure.AddAnimal(_animalFactory.CreateSheep());
+            List<Animal> addedAnimals = new List<Animal>()
+            { _animalFactory.CreateHorse(),
+              _animalFactory.CreateCow(),
+              _animalFactory.CreateSheep()
+            };
+            
+            farmAnimalsEnclosure.AddAnimals(addedAnimals);
 
             return farmAnimalsEnclosure;
         }
@@ -258,9 +270,9 @@ namespace Zoo
             Gender = gender;
         }
 
-        public string Name { get; private set; }
-        public string Sound { get; private set; }
-        public string Gender { get; private set; }
+        public string Name { get; }
+        public string Sound { get;}
+        public string Gender { get;}
     }
 
     static class UserUtils
